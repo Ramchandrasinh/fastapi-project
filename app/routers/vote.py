@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Response
 from sqlmodel import Session
 from typing import Annotated
 from ..database import get_db
@@ -9,7 +9,7 @@ SessionDep = Annotated[Session, Depends(get_db)]
 router = APIRouter(prefix="/votes", tags=["Vote"])
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-def vote(vote: schemas.VoteRequest, session: SessionDep, current_user: schemas.UserOutput = Depends(oauth2.get_current_user)):
+def vote(vote: schemas.VoteRequest, session: SessionDep, response: Response ,current_user: schemas.UserOutput = Depends(oauth2.get_current_user)):
     post = session.get(Post, vote.post_id)
 
     if not post:
@@ -31,4 +31,5 @@ def vote(vote: schemas.VoteRequest, session: SessionDep, current_user: schemas.U
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Vote not found")
         session.delete(existing_vote)
         session.commit()
+        response.status_code = status.HTTP_200_OK
         return {"message": "Vote removed"}
