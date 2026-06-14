@@ -24,5 +24,5 @@ def test_login_user(client):
         "/auth/login/",
         data={"username": "user@example.com", "password": "password123"},
     )
-    print(res.json())
+    # print(res.json())
     assert res.status_code == 200

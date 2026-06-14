@@ -1,9 +1,15 @@
 from fastapi import FastAPI
 from .routers import post, user, auth, vote
+from .config import settings
+from .rate_limiter import TokenBucketRateLimiter, rate_limit_request
 from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+rate_limiter = TokenBucketRateLimiter(
+    capacity=settings.rate_limit_capacity,
+    refill_rate=settings.rate_limit_refill_rate,
+)
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -20,6 +26,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def rate_limit_middleware(request, call_next):
+    return await rate_limit_request(
+        request=request,
+        call_next=call_next,
+        limiter=rate_limiter,
+        enabled=settings.rate_limit_enabled,
+        exempt_paths=("/docs", "/redoc", "/openapi.json"),
+    )
+
+
 # SessionDep = Annotated[Session, Depends(get_db)]
 
 # @app.on_event("startup")
@@ -34,4 +52,3 @@ app.include_router(vote.router)
 @app.get("/")
 async def root() -> dict:
     return {"msg": "Hello World"}
-

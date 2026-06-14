@@ -3,6 +3,7 @@ services:
     image: ramchandrasinh/fastapi
     ports:
       - 8000:8000
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     environment:
       - DATABASE_HOSTNAME=postgres
       - DATABASE_PORT=5432
@@ -12,6 +13,9 @@ services:
       - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7123
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=60
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_CAPACITY=60
+      - RATE_LIMIT_REFILL_RATE=1
     depends_on:
       postgres:
         condition: service_healthy

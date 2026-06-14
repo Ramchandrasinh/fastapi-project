@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     secret_key: str = ""
     algorithm: str = ""
     access_token_expire_minutes: int = 100
+    rate_limit_enabled: bool = True
+    rate_limit_capacity: int = 60
+    rate_limit_refill_rate: float = 1.0
 
     model_config = {"env_file": ".env"}
 

@@ -26,10 +26,10 @@ def test_create_user_and_login(client):
     ("login@example.com", "wrongpass", 403),
     ("wrong@example.com", "wrongpass", 403),
 ])
-def test_login_invalid_credentials(client):
+def test_login_invalid_credentials(client, email, password, status_code):
     response = client.post(
         "/auth/login/",
         data={"username": email, "password": password},
     )
-    assert response.status_code == 403
+    assert response.status_code == status_code
     assert response.json()["detail"] == "Invalid email or password"
