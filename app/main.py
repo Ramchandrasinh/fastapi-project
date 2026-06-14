@@ -1,7 +1,4 @@
-from fastapi import FastAPI, Depends
-from sqlmodel import Session
-from typing import Annotated
-from .database import create_db_and_tables, get_db
+from fastapi import FastAPI
 from .routers import post, user, auth, vote
 from fastapi.middleware.cors import CORSMiddleware
 
