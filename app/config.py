@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     
+    database_url: str = ""
     database_username: str = ""
     database_hostname: str = ""
     database_port: str = ""
@@ -14,6 +15,6 @@ class Settings(BaseSettings):
     rate_limit_capacity: int = 60
     rate_limit_refill_rate: float = 1.0
 
-    model_config = {"env_file": ".env"}
+    model_config = {"env_file": ".env", "extra": "ignore"}
 
 settings = Settings()
