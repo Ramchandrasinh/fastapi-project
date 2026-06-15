@@ -51,4 +51,4 @@ app.include_router(vote.router)
 
 @app.get("/")
 async def root() -> dict:
-    return {"msg": "Hello World"}
+    return {"msg": "Hello This is a FastAPI project for a blog API"}
