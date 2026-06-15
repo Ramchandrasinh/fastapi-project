@@ -3,7 +3,7 @@ from app import schemas
 def test_read_main(client):
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"msg": "Hello World"}
+    assert response.json() == {"msg": "Hello This is a FastAPI project for a blog API"}
 
 
 def test_create_user(client):
