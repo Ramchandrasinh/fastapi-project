@@ -31,7 +31,6 @@ class PostResponse(PostBase):
     model_config = ConfigDict(from_attributes=True) # type: ignore
 
 class UserBase(SQLModel):
-    id: int | None = None
     email: EmailStr
     password: str
 
