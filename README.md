@@ -1,3 +1,7 @@
+# Link Of API Deployed On Render
+
+https://fastapi-api-3yil.onrender.com
+
 # FastAPI Social Media API
 
 A modern, production-ready REST API built with **FastAPI** for a social media platform. Features secure user authentication, post management, voting system, rate limiting, and comprehensive test coverage.
